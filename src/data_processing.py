@@ -2,7 +2,7 @@ import pandas as pd
 from sklearn.preprocessing import MinMaxScaler, StandardScaler, LabelEncoder
 
 def get_data():
-    return  pd.read_csv('data/train.csv').values, pd.read_csv('data/labels.csv').values
+    return  pd.read_csv('../data/train.csv'), pd.read_csv('../data/labels.csv')
 
 def data_exploration(X, y):
     NotImplementedError("This method is not implemented yet")
@@ -10,8 +10,8 @@ def data_exploration(X, y):
 def feature_encoding(X):
     """
     One-hot encode the 'features'.
-    Input: X: features (pd.DataFrame) with shape = (45211, 16)
-    Output: X: features_encoded (pd.DataFrame) with shape = (45211, 16)
+    Input: X: features (pd.DataFrame)
+    Output: X: features_encoded (pd.DataFrame)
     """
     non_numerical_columns_names = X.select_dtypes(exclude=['number']).columns
     le = LabelEncoder()
@@ -22,15 +22,15 @@ def feature_encoding(X):
 
     return X
 
-def encode_label(y):
-    """
-    Encode the 'labels' data to numerical values.
-    Input: y: labels (pd.DataFrame) with shape = (45211, 1)
-    Output: y: labels_int (pd.DataFrame) with shape = (45211, 1)
-    """
-    le = LabelEncoder()
-    y['y'] = le.fit_transform(y['y'])
-    return y
+# def encode_label(y):
+#     """
+#     Encode the 'labels' data to numerical values.
+#     Input: y: labels (pd.DataFrame)
+#     Output: y: labels_int (pd.DataFrame)
+#     """
+#     le = LabelEncoder()
+#     y['y'] = le.fit_transform(y['y'])
+#     return y
 
     
 def data_preprocessing():
@@ -38,7 +38,7 @@ def data_preprocessing():
     X, y = get_data()
     # convert categorical to numerical
     X = feature_encoding(X)
-    y = encode_label(y)
+    # y = encode_label(y)
 
     return X, y
 
