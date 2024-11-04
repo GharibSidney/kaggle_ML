@@ -49,8 +49,8 @@ def normalize_features(X_train, X_test, Is_Standard_scaler = True):
     Output: X_train_scaled, X_test_scaled (pd.DataFrame) the same shape of X_train and X_test
     """
     # TODO write normalization here
-    if Is_Standard_scaler: StandardScaler()
-    else: scaler =  scaler = MinMaxScaler()
+    if Is_Standard_scaler: scaler = StandardScaler()
+    else: scaler = MinMaxScaler()
 
     X_train_scaled = scaler.fit_transform(X_train)
     X_test_scaled = scaler.transform(X_test)
