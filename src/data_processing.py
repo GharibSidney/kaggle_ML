@@ -21,7 +21,7 @@ def feature_encoding(X):
     for column in non_numerical_columns_names:
         # Only encore the columns that are not numerical 
         X[column] = le.fit_transform(X[column])
-    print(X.head())
+    # print(X.head())
 
     return X
 
