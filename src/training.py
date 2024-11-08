@@ -14,9 +14,9 @@ def data_splits(X, y):
     Input(s): X: features (pd.DataFrame), y: labels (pd.DataFrame)
     Output(s): X_train, X_test, y_train, y_test
     """
-    # Use random_state = 0 in the train_test_split
-    #   write data split here
-    X_train, X_test, y_train, y_test = train_test_split(X, y, train_size=0.8, test_size=0.2, shuffle=True, random_state=0)
+    # Split the data into training and testing sets
+    # I added the stratify=y to make sure that the distribution of the labels in the train and test sets are the same
+    X_train, X_test, y_train, y_test = train_test_split(X, y, train_size=0.8, test_size=0.2, shuffle=True, random_state=0, stratify=y)
 
     return X_train, X_test, y_train, y_test
 
