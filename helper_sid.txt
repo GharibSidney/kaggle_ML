@@ -1,0 +1,18 @@
+# Get the predicted probabilities for class 1 (positive class)
+# y_prob = cls_randomforest.predict_proba(X_validation_scaled)[:, 1]  # Probabilities for class 1
+# threshold_list = np.arange(0, 1.1, 0.1)
+# threshold_best = 0 
+# f1_best = 0
+
+# for threshold in threshold_list:
+#     y_pred = (y_prob >= threshold).astype(int)  # Apply threshold
+#     validation_f1 = f1_score(y_validation, y_pred) #   find f1_score
+#     if validation_f1 > f1_best:
+#         f1_best = validation_f1
+#         threshold_best = threshold
+    # print("Validation f1 score:", validation_f1)
+    # print("Classification Report with Adjusted Threshold:")
+    # print(classification_report(y_validation, y_pred))
+
+# print("Best Threshold:", threshold_best)
+# print("Best F1 Score:", f1_best)
