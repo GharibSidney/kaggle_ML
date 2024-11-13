@@ -16,3 +16,106 @@
 
 # print("Best Threshold:", threshold_best)
 # print("Best F1 Score:", f1_best)
+
+
+
+
+
+
+
+
+
+import torch
+import torch.nn as nn
+import torch.optim as optim
+from sklearn.utils.class_weight import compute_class_weight
+import torch.nn.functional as F
+
+# Ensure you have access to a GPU if available
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+# Step 1: Calculate Class Weights
+class_weights = compute_class_weight(class_weight='balanced', classes=np.array([0, 1]), y=y_train['Diabetes_binary'].values.ravel())
+class_weights = torch.tensor(class_weights, dtype=torch.float32).to(device)
+
+# Step 2: Define the Custom Neural Network
+class CustomNN(nn.Module):
+    def __init__(self, input_size):
+        super(CustomNN, self).__init__()
+        # Adding more layers and neurons
+        print('input size',input_size)
+        self.fc1 = nn.Linear(input_size, 256)
+        self.fc2 = nn.Linear(256, 128)
+        self.fc3 = nn.Linear(128, 64)
+        self.fc4 = nn.Linear(64, 32)
+        self.fc5 = nn.Linear(32, 16)
+        self.output = nn.Linear(16, 1)  # Binary classification output layer
+
+        # Xavier uniform initialization
+        nn.init.xavier_uniform_(self.fc1.weight)
+        nn.init.xavier_uniform_(self.fc2.weight)
+        nn.init.xavier_uniform_(self.fc3.weight)
+        nn.init.xavier_uniform_(self.fc4.weight)
+        nn.init.xavier_uniform_(self.output.weight)
+
+    def forward(self, x):
+        x = F.relu(self.fc1(x))
+        x = F.relu(self.fc2(x))
+        x = F.relu(self.fc3(x))
+        x = F.relu(self.fc4(x))
+        x = F.relu(self.fc5(x))
+        x = self.output(x)
+        return x
+
+# Step 3: Initialize Model, Loss Function, and Optimizer
+
+
+# Convert data to PyTorch tensors
+X_train_tensor = torch.tensor(X_train_scaled, dtype=torch.float32).to(device)
+y_train_tensor = torch.tensor(y_train.values, dtype=torch.float32).to(device)
+
+X_validation_tensor = torch.tensor(X_validation_scaled, dtype=torch.float32).to(device)
+y_validation_tensor = torch.tensor(y_validation.values, dtype=torch.float32).to(device)
+
+input_size = X_train_tensor.shape[1]  # Replace with the actual number of input features
+model = CustomNN(input_size).to(device)
+criterion = nn.BCEWithLogitsLoss(pos_weight=class_weights[1])  # Use pos_weight for binary classification
+optimizer = optim.Adam(model.parameters(), lr=0.01)
+# Step 4: Training Loop
+num_epochs = 100
+for epoch in range(num_epochs):
+    model.train()
+    optimizer.zero_grad()
+    
+    # Forward pass
+    outputs = model(X_train_tensor).squeeze()
+    loss = criterion(outputs, y_train_tensor.squeeze())
+    
+    # Backward pass and optimization
+    loss.backward()
+    optimizer.step()
+    
+    # Validation after each epoch
+    if (epoch + 1) % 10 == 0:
+        model.eval()
+        with torch.no_grad():
+            val_outputs = model(X_validation_tensor).squeeze()
+            val_loss = criterion(val_outputs, y_validation_tensor.squeeze())
+            val_preds = torch.round(torch.sigmoid(val_outputs))
+            
+            # Calculate F1 Score or other metrics
+            # (Your F1 calculation code here using val_preds and y_validation_tensor)
+        
+        print(f"Epoch [{epoch+1}/{num_epochs}], Loss: {loss.item()}, Validation Loss: {val_loss.item()}")
+classification_summary_one(y_validation, val_preds.cpu().numpy())
+
+
+
+
+
+
+
+
+
+
+avant ce soir columnsToDrop = ['Age_Group', 'MentHlth', 'HvyAlcoholConsump', 'NoDocbcCost', 'Smoker', 'Fruits', 'Mental_Health_Risk', 'Education', 'Income', 'Heart_Disease_Risk']
