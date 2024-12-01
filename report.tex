@@ -8,6 +8,7 @@
 \usepackage{hyperref}
 \usepackage{url}
 \usepackage{graphicx} % For including images
+\usepackage{booktabs} % For professional-looking tables
 
 
 \title{INF8245E Fall2024  \\ Kaggle competition \\ Team\_1 }
@@ -142,10 +143,40 @@ heading and 1/2~line space after the third level heading.
 
 \begin{figure}[ht!]
    \centering
-   \includegraphics[width=0.8\textwidth]{example-image} % Adjust width as needed
+   \includegraphics[width=0.8\textwidth]{results/nn_loss_overtime.png} % Adjust width as needed
    \caption{This is a sample caption for the image.}
    \label{fig:sample-image}
 \end{figure}
+
+
+\documentclass{article}
+\usepackage{graphicx} % For including images (if needed)
+\usepackage{booktabs} % For professional-looking tables
+
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{|l|c|}
+        \hline
+        \textbf{Model} & \textbf{Validation F1 Score} \\ \hline
+        Random Forest & 0.4589 \\ \hline
+        Random Forest PCA & 0.4309 \\ \hline
+        Decision Tree & 0.4252 \\ \hline
+        Decision Tree Bagging & 0.4363 \\ \hline
+        Decision Tree Adaboosting & 0.4588 \\ \hline
+        Logistic Regression & 0.4620 \\ \hline
+        Logistic Regression Adaboosting & 0.4582 \\ \hline
+        XGBClassifier & 0.2949 \\ \hline
+        SVM & - \\ \hline
+        KNN & 0.2543 \\ \hline
+        MLP & 0.2773 \\ \hline
+    \end{tabular}
+    \caption{Validation F1 Scores for Different Models }
+    \label{tab:validation-f1-scores}
+\end{table}
+
+\end{document}
+
 
 \section{Discussion}
 
