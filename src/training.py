@@ -6,7 +6,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import SVC
 from sklearn.metrics import f1_score, accuracy_score
 from sklearn.metrics import classification_report, confusion_matrix
-from imblearn.under_sampling import NearMiss
+#from imblearn.under_sampling import NearMiss
 
 def data_splits(X, y):
     """
@@ -20,16 +20,16 @@ def data_splits(X, y):
 
     return X_train, X_test, y_train, y_test
 
-def data_splits_equal_classes(X, y):
+#def data_splits_equal_classes(X, y):
 
-    nm = NearMiss(version = 1 , n_neighbors = 10)
+#    nm = NearMiss(version = 1 , n_neighbors = 10)
 
-    x_sm, y_sm= nm.fit_resample(X, y)
+#    x_sm, y_sm= nm.fit_resample(X, y)
 
-    print(y_sm.shape , x_sm.shape)
-    X_train, X_test, y_train, y_test = train_test_split(x_sm,y_sm, test_size=0.2 , random_state=42)
+#    print(y_sm.shape , x_sm.shape)
+#    X_train, X_test, y_train, y_test = train_test_split(x_sm,y_sm, test_size=0.2 , random_state=42)
 
-    return X_train, X_test, y_train, y_test
+#    return X_train, X_test, y_train, y_test
 
 
 def train_model(model_name, X_train_scaled, y_train):
