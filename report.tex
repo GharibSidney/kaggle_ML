@@ -121,23 +121,28 @@ regarding figures, tables, acknowledgments, and references.
 There will be a strict upper limit of 10 pages for the main text of the initial submission, with unlimited additional pages for citations. 
 
 \section{Methodology}
-\label{headings}
+\label{methodology}
 
-First level headings are in small caps,
-flush left and in point size 12. One line space before the first level
-heading and 1/2~line space after the first level heading.
 
-\subsection{Headings: second level}
 
-Second level headings are in small caps,
-flush left and in point size 10. One line space before the second level
-heading and 1/2~line space after the second level heading.
+
+\subsection{Training-Validation split}
+
+We decided to split our training set into a training and validation set with a ratio of 90\% and 10\% respectively,
+because we considered that 202944 samples was enough so that only 10\%(20294 samples) would give us a good approximation of the
+accuracies of our models.
+
+The validation would be used to measure the performances during training,
+telling us which hyperparameters gives the bests results, and telling us where
+to stop tne training to avoid overfitting.
+
+We made sure to shuffle the set to avoid data that would be ordered, and we used a stratified split to make sure
+the validation and training set would have the same proportion of positive and negative samples. 
 
 \subsubsection{Headings: third level}
+sub sub
 
-Third level headings are in small caps,
-flush left and in point size 10. One line space before the third level
-heading and 1/2~line space after the third level heading.
+
 \section{Results}
 
 \begin{figure}[ht!]
