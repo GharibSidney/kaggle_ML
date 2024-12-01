@@ -52,16 +52,16 @@ The research leverages machine learning methodologies to uncover significant pat
 
 \section{Feature design}
 
-ICLR requires electronic submissions, processed by
-\url{https://openreview.net/}. See ICLR's website for more instructions.
+In order to select the features to keep we used multiple different approaches. 
 
-If your paper is ultimately accepted, the statement {\tt
-  {\textbackslash}iclrfinalcopy} should be inserted to adjust the
-format to the camera ready requirements.
+First of all, we used an ordinal encoding for the features that were not numbers which was the case for the features BMI Category, 
+Age Group, Education Level and Income Group. Since these features can only take a small amount of different values, we were able to 
+specified the order of importance between the different values. For instance, the only possible values for Income Group are Low Income, 
+Middle Income and High Income. It is simple to determine that Low Income is inferior to Middle Income which is inferior to High Income.
+It is important to specify the order, otherwise the ordinal encoder from sklearn.preprocessing will encode the values in alphabetical 
+order.
 
-The format for the submissions is a variant of the NeurIPS format.
-Please read carefully the instructions below, and follow them
-faithfully.
+Once all of the data are numerically encoded, it is easier to analyze the importance of each feature. 
 
 \subsection{Style}
 
