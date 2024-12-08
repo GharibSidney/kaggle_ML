@@ -6,3 +6,4 @@ matplotlib
 scipy
 xgboost
 imblearn
+torch
