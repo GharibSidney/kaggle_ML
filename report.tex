@@ -315,6 +315,25 @@ Figure 1 shows the training and validation loss, as well as the F1 score over 10
 
 \section{Discussion}
 
+Our model and methodolody have many pros. First of all, we ensured to have a solid data exploration phase that allowed us to get 
+important informations on the dataset and make a good feature selection. We plotted multiple graphs such as distribution graphs, 
+boxplots, normal distribution plots and a heatmap. Second of all, by performing a grid search for all of our models, we made sure to 
+find better hyperparameter values than the default ones. This allowed us to have a model that better fitted our dataset. Third of all, 
+we used a 90/10 stratified split for our training and validation set to make sure our models were trained on the largest possible 
+dataset and that the training set and validation set were representative of the whole dataset class distribution.
+
+Our model and methodolody also have cons. To begin with, we only explored models that we learned about during this course. This has 
+limited the possibilities of models and we might have found a better model otherwise. Also, our model gives a lot of false positive 
+predictions which affected negatively our f1-score.
+
+For future work, it would be a good idea to study each feature separately and try to find if it follows a specific distribution and not 
+only try for the normal distribution. We also didn't sufficiently take into account the outliers values for each features. Maybe we 
+could obtain better results if we try to remove them from the dataset. Another suggestion for improvement would be to try to make the 
+Stacking with the meta model work. The venue was not totally explored, but it could have given us a better model. Finally, we could 
+combine the grid search with a random search when tuning our models to get more precise values of hyperparameters. Since the gaps 
+between the tested hyperparameters were often significant, a random search could help us get more tuned values without taking too much 
+time. 
+
 \section{Statement of Contributions}
 \label{others}
 
@@ -323,8 +342,8 @@ I worked on the Random Forest model, the Decision Tree model, the Decision Tree 
 I performed the data analysis with the help of my teammates. Additionally, I contributed to writing the report for the section analyzing the results.
 
 I, Elizabeth Michaud, mainly developed code in the data exploration and preprocessing part. I tried to improve a few of the models that were already 
-in place in the code. I tried the stacking model method, but the results were inconclusive. I wrote the feature design and the algorithm sections of 
-the report. 
+in place in the code. I tried the stacking model method, but the results were inconclusive. I wrote the feature design, the algorithm and the discussion 
+sections of the report. 
 
 I, Alexis Nicolas, mainly wworked on optimizing our neural network model.
 I tried many different different techniques, permutations of layers, activation functions, optimisers and loss functions
