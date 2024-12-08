@@ -161,16 +161,16 @@ We used cuda cores to train our deep neural network model with the Pytorch libra
 This made the training of a neural network way faster than if we have kept the training set on the cpu.
 With this optimisation we were able to quickly test different configurations for the hidden layers,
 like the number of neurons and the number of hidden layers.
-We also tested different activation fonctions like the RElU and the leaky RElU.
+We also tested different activation fonctions like the ReLU and the Leaky ReLU.
 We tested different optimisers like the ADAM and SGD.
 We used the binary classification error to measure the loss of the model,
 with a weight added to the class 1, since the dataset was imbalenced with fewer positives samples.
 We tried to train the model using mini-batch gradient descent and full batch gradient.
-Finally, we used the validation set to stop the training when the f1-score of its predictions was not improving anymore.
+Finally, we used the validation set to stop the training when the F1-score of its predictions was not improving anymore.
 
 
 Unfortunately, all of the combinations of theses models, loss functions, activation functions, optimisers and epoch of training were not able to produce
-better results than our other models. All of the neural networks we tried seemed to give us the same f1-score on the validation set.
+better results than our other models. All of the neural networks we tried seemed to give us the same F1-score on the validation set.
 
 Since the models always predicted true positive at around 50\%, we tried tweaking the value of the treshold
 of the prediction to further improve the accuracy on the class 1. Even though lowering it down to 0.1 gave us a small improvement,
@@ -180,22 +180,22 @@ it was not significant enough to make a change, since the number of false negati
 \subsection{finding the optimal hyperparameters for the models}
 We also tried other models seen in class. For theses, we used the sklearn library to train them and find
 the best hyperparamaters. We used a grid search algorithm to find the best combination of hyperparameters
-for each model. We used the f1-score as a metric for the grid search, since it was the one we wanted to maximise.
+for each model. We used the F1-score as a metric for the grid search, since it was the one we wanted to maximise.
 Since the training and evalluation of each combination of hyperparameter is a very long. We used a gave a few hyperparameter
 set to the grid search. 
 
 
 
 \section{Results}
-The results from table \ref{tab:validation-f1-scores} are the models validation F1 scores reveal important insights into their performance on the classification task. Among all tested models, the custom Neural Network achieved the highest validation F1 score of 0.4706, demonstrating its effectiveness at capturing complex patterns in the data. This superior performance can be attributed to the carefully designed architecture, which includes multiple layers with dropout regularization, Xavier initialization, and the use of leaky ReLU activations. These design choices appear to enhance the network's ability to generalize, making it the most effective model in this comparison.
+The results from table \ref{tab:validation-F1-scores} are the models validation F1-scores reveal important insights into their performance on the classification task. Among all tested models, the custom Neural Network achieved the highest validation F1-score of 0.4706, demonstrating its effectiveness at capturing complex patterns in the data. This superior performance can be attributed to the carefully designed architecture, which includes multiple layers with dropout regularization, Xavier initialization, and the use of leaky ReLU activations. These design choices appear to enhance the network's ability to generalize, making it the most effective model in this comparison.
 
-The Logistic Regression model, with a validation F1 score of 0.4620, emerged as the second-best performer. Its strong result highlights the model's simplicity and robustness for binary classification tasks. Interestingly, Logistic Regression outperformed ensemble techniques like Adaboosting, which scored slightly lower at 0.4582. This outcome suggests that while boosting often improves base model performance, it may not provide significant gains for Logistic Regression in this dataset.
+The Logistic Regression model, with a validation F1-score of 0.4620, emerged as the second-best performer. Its strong result highlights the model's simplicity and robustness for binary classification tasks. Interestingly, Logistic Regression outperformed ensemble techniques like Adaboosting, which scored slightly lower at 0.4582. This outcome suggests that while boosting often improves base model performance, it may not provide significant gains for Logistic Regression in this dataset.
 
-Random Forest models also performed well, with the standalone Random Forest achieving a validation F1 score of 0.4589. This model's ensemble nature likely helped capture the nuances of the dataset. However, when dimensionality reduction via PCA was applied, the performance dropped to 0.4309. This decline indicates that PCA may have eliminated features essential for classification, reducing the model's effectiveness. Additionally, Decision Tree models, which serve as a base for Random Forest, showed varied results. The single Decision Tree achieved a validation F1 score of 0.4252, which improved modestly with Bagging to 0.4363 and more significantly with Adaboosting to 0.4588. These results illustrate how ensemble techniques help mitigate the inherent overfitting tendencies of decision trees.
+Random Forest models also performed well, with the standalone Random Forest achieving a validation F1-score of 0.4589. This model's ensemble nature likely helped capture the nuances of the dataset. However, when dimensionality reduction via PCA was applied, the performance dropped to 0.4309. This decline indicates that PCA may have eliminated features essential for classification, reducing the model's effectiveness. Additionally, Decision Tree models, which serve as a base for Random Forest, showed varied results. The single Decision Tree achieved a validation F1-score of 0.4252, which improved modestly with Bagging to 0.4363 and more significantly with Adaboosting to 0.4588. These results illustrate how ensemble techniques help mitigate the inherent overfitting tendencies of decision trees.
 
-On the other hand, some models struggled to achieve competitive performance. For example, the XGBClassifier's validation F1 score of 0.2949 was surprisingly low, given its reputation as a high-performing algorithm. This outcome may indicate that the model requires further hyperparameter tuning or better feature engineering to suit this dataset. Similarly, K-Nearest Neighbors (KNN) scored only 0.2543, likely due to its inability to handle high-dimensional data effectively without feature selection or dimensionality reduction. The Multilayer Perceptron (MLP) model also underperformed, achieving a validation F1 score of 0.2773, suggesting that it may lack the architectural sophistication or training optimizations present in the custom Neural Network.
+On the other hand, some models struggled to achieve competitive performance. For example, the XGBClassifier's validation F1-score of 0.2949 was surprisingly low, given its reputation as a high-performing algorithm. This outcome may indicate that the model requires further hyperparameter tuning or better feature engineering to suit this dataset. Similarly, K-Nearest Neighbors (KNN) scored only 0.2543, likely due to its inability to handle high-dimensional data effectively without feature selection or dimensionality reduction. The Multilayer Perceptron (MLP) model also underperformed, achieving a validation F1-score of 0.2773, suggesting that it may lack the architectural sophistication or training optimizations present in the custom Neural Network.
 
-The Support Vector Machine (SVM), with a validation F1 score of 0.4357, performed comparably to ensemble models like Decision Tree Bagging. This performance reflects the SVM's ability to model nonlinear relationships in the data, though it fell short of the highest-performing methods.
+The Support Vector Machine (SVM), with a validation F1-score of 0.4357, performed comparably to ensemble models like Decision Tree Bagging. This performance reflects the SVM's ability to model nonlinear relationships in the data, though it fell short of the highest-performing methods.
 
 Overall, the results highlight the advantages of more advanced models like Neural Networks while also showcasing the reliability of simpler models such as Logistic Regression and Random Forest. The modest gains achieved by boosting methods indicate that ensemble techniques are valuable but may require careful tuning to unlock their full potential. Future work could explore additional optimizations, such as hyperparameter tuning for XGBClassifier, further experimentation with Neural Network architectures, and the use of ensemble methods that combine predictions from the strongest individual models. 
 
@@ -209,7 +209,7 @@ A dropout rate of 0.1 was applied after each layer to reduce overfitting by rand
 The NAdam optimizer was used for training, combining the benefits of Adam optimization and Nesterov momentum. A learning rate of 0.005 was set to balance the speed of convergence and training stability. The model was trained over 100 epochs, providing enough time to learn the data's patterns without overfitting.
 
 
-Figure \ref{tab:validation-f1-scores} shows the training and validation loss, as well as the F1 score over 100 epochs. There is a gradual decrease in the training loss until around 30 epochs. The validation loss, on the other hand, remains stable throughout most of the training, with a plateau in the error between epochs 10 and 20. The F1 score consistently stays between 0.40 and 0.47. Therefore, it may be possible to reduce the number of epochs since all metrics converge starting from around 70 epochs.
+Figure \ref{tab:validation-F1-scores} shows the training and validation loss, as well as the F1-score over 100 epochs. There is a gradual decrease in the training loss until around 30 epochs. The validation loss, on the other hand, remains stable throughout most of the training, with a plateau in the error between epochs 10 and 20. The F1-score consistently stays between 0.40 and 0.47. Therefore, it may be possible to reduce the number of epochs since all metrics converge starting from around 70 epochs.
 
 
 \section{Discussion}
@@ -223,7 +223,7 @@ dataset and that the training set and validation set were representative of the 
 
 Our model and methodolody also have cons. To begin with, we only explored models that we learned about during this course. This has 
 limited the possibilities of models and we might have found a better model otherwise. Also, our model gives a lot of false positive 
-predictions which affected negatively our f1-score.
+predictions which affected negatively our F1-score.
 
 For future work, it would be a good idea to study each feature separately and try to find if it follows a specific distribution and not 
 only try for the normal distribution. We also didn't sufficiently take into account the outliers values for each features. Maybe we 
@@ -258,7 +258,7 @@ We hereby state that all the work presented in this report is that of the author
     \centering
     \begin{tabular}{|l|c|}
         \hline
-        \textbf{Model} & \textbf{Validation F1 Score} \\ \hline
+        \textbf{Model} & \textbf{Validation F1-score} \\ \hline
         Random Forest & 0.4589 \\ \hline
         Random Forest PCA & 0.4309 \\ \hline
         Decision Tree & 0.4252 \\ \hline
@@ -272,8 +272,8 @@ We hereby state that all the work presented in this report is that of the author
         MLP & 0.2773 \\ \hline
         Neural Network & 0.4706 \\ \hline
     \end{tabular}
-    \caption{Validation F1 Scores for Different Models }
-    \label{tab:validation-f1-scores}
+    \caption{Validation F1-scores for Different Models }
+    \label{tab:validation-F1-scores}
 \end{table}
 
 
