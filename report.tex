@@ -23,8 +23,8 @@
 Sidney Gharib \\
 \texttt{\ sidney.gharib@polymtl.ca} \\
 \And
-Elizabeth \\
-\texttt{\ E@polymtl.ca} \\
+Elizabeth Michaud - 2073093 \\
+\texttt{\ elizabeth-1.michaud@polymtl.ca} \\
 }
 
 % The \author macro works with any number of authors. There are two commands
@@ -53,16 +53,50 @@ The research leverages machine learning methodologies to uncover significant pat
 
 \section{Feature design}
 
-In order to select the features to keep we used multiple different approaches. 
+The first step was to explore the dataset to understand the kind of data and features we were working with. By doing so, we were 
+able to notice that the dataset had more than 200,000 samples and 28 features. While most of the features were numbers 
+(binary, discrete and continuous numbers), a few of them were of type "object". 
 
-First of all, we used an ordinal encoding for the features that were not numbers which was the case for the features BMI Category, 
-Age Group, Education Level and Income Group. Since these features can only take a small amount of different values, we were able to 
-specified the order of importance between the different values. For instance, the only possible values for Income Group are Low Income, 
-Middle Income and High Income. It is simple to determine that Low Income is inferior to Middle Income which is inferior to High Income.
-It is important to specify the order, otherwise the ordinal encoder from sklearn.preprocessing will encode the values in alphabetical 
-order.
+For each of the discrete and continuous number features, we made a boxplot of their values in the dataset and displayed it. 
+This helped us visualize the distribution of the numerical features and their outliers values. The features BMI, MentHlth and PhysHlth
+are the features for which there is the most outliers. This is an information the we had to keep in mind while developping our model.
 
-Once all of the data are numerically encoded, it is easier to analyze the importance of each feature. 
+For each of the binary features, we made a plot showing the distribution of "yes" and "no" labels per possible values which are 0 and 1. 
+When the percentage of "yes" is very similar between 0 and 1, it could mean that the feature in question doesn't have a significant 
+impact on the label. Therefore, we consider removing that feature for the model training. 
+
+Since we also wished to explore the features that are non-numerical, we used an ordinal encoding for the features BMI Category, 
+Age Group, Education Level and Income Group. We used scikit-learn OrdinalEncoder. Because these features can only take a small amount of different values, we were able to 
+specified the order of importance between the different values. For instance, the only possible values for Income Group are "Low Income", 
+"Middle Income" and "High Income". It is simple to determine that Low Income is inferior to Middle Income which is inferior to High 
+Income. It is important to specify the order, otherwise the ordinal encoder from sklearn.preprocessing will encode the values in 
+alphabetical order.
+
+Once all the features were encoded numerically, we were able to plot a graph representing the correlation between Diabetes binary 
+values from labels.csv and each of the features. We used pandas.DataFrame.corrwith function in order to make such graph. 
+The resulting graph shows how much each 28 features tend to affect the diabetes diagnosis. When the result for a feature is positive, 
+it means that samples that have a higher value for this feature tends to be labelled as "yes" and vice versa. If the result for a 
+feature is very close to zero, we consider removing that feature from the training step. 
+
+We used another metric, called the mutual information, to measure how much each feature impacts the diagnosis. We computed the mutual 
+information score separately for the binary features, the continuous numerical features and the discrete numerical features. 
+The lower is the score, the lower should be the impact that this feature has on the diagnosis. This metric was also considered when 
+trying to make a good feature selection.
+
+Next, we tried to used the normal probability plot of the features to verify if they were following a Gaussian distribution. It was not 
+the case, but if it had been the case, we could potentially have obtained a good classifier by using a Gaussian Naive Bayes model.
+
+Finally, the last method we used in order to select the features to keep was the correlation matrix. By using a correlation matrix, we 
+were able to notice if some of the features were highly correlated. If two features are highly correlated, it might not be useful to 
+keep both of them to train the model. 
+
+After taking into consideration all of the metrics, we were able to filter out some features from the training step. We decided to 
+remove Age Group, MentHlth, HvyAlcoholConsump, NoDocbcCost, Smoker, Fruits, Veggies, Mental Health Risk and AnyHealthcare. 
+We tried another combinations of features to remove, but we noticed that this feature selection was the one that gave the best results.
+
+In order to complete the data preprocessing, we encoded all the non-numerical features using scikit-learn LabelEncoder, we split the 
+dataset into a training set and a validation set and we normalized the training set, the validation set and the testing set using 
+scikit-learn StandartScaler. 
 
 \subsection{Style}
 
