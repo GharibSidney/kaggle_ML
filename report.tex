@@ -8,6 +8,7 @@
 \usepackage{hyperref}
 \usepackage{url}
 \usepackage{graphicx} % For including images
+\usepackage{booktabs} % For professional-looking tables
 
 
 \title{INF8245E Fall2024  \\ Kaggle competition \\ Team\_1 }
@@ -138,36 +139,157 @@ heading and 1/2~line space after the second level heading.
 Third level headings are in small caps,
 flush left and in point size 10. One line space before the third level
 heading and 1/2~line space after the third level heading.
+
+
 \section{Results}
+
+\begin{table}[ht!]
+    \centering
+    \begin{tabular}{|l|c|}
+        \hline
+        \textbf{Model} & \textbf{Validation F1 Score} \\ \hline
+        Random Forest & 0.4589 \\ \hline
+        Random Forest PCA & 0.4309 \\ \hline
+        Decision Tree & 0.4252 \\ \hline
+        Decision Tree Bagging & 0.4363 \\ \hline
+        Decision Tree Adaboosting & 0.4588 \\ \hline
+        Logistic Regression & 0.4620 \\ \hline
+        Logistic Regression Adaboosting & 0.4582 \\ \hline
+        XGBClassifier & 0.2949 \\ \hline
+        SVM & 0.4357 \\ \hline
+        KNN & 0.2543 \\ \hline
+        MLP & 0.2773 \\ \hline
+        Neural Network & 0.4706 \\ \hline
+    \end{tabular}
+    \caption{Validation F1 Scores for Different Models }
+    \label{tab:validation-f1-scores}
+\end{table}
+
+
+The results from table 1 are the models validation F1 scores reveal important insights into their performance on the classification task. Among all tested models, the custom Neural Network achieved the highest validation F1 score of 0.4706, demonstrating its effectiveness at capturing complex patterns in the data. This superior performance can be attributed to the carefully designed architecture, which includes multiple layers with dropout regularization, Xavier initialization, and the use of leaky ReLU activations. These design choices appear to enhance the network's ability to generalize, making it the most effective model in this comparison.
+
+The Logistic Regression model, with a validation F1 score of 0.4620, emerged as the second-best performer. Its strong result highlights the model's simplicity and robustness for binary classification tasks. Interestingly, Logistic Regression outperformed ensemble techniques like Adaboosting, which scored slightly lower at 0.4582. This outcome suggests that while boosting often improves base model performance, it may not provide significant gains for Logistic Regression in this dataset.
+
+Random Forest models also performed well, with the standalone Random Forest achieving a validation F1 score of 0.4589. This model's ensemble nature likely helped capture the nuances of the dataset. However, when dimensionality reduction via PCA was applied, the performance dropped to 0.4309. This decline indicates that PCA may have eliminated features essential for classification, reducing the model's effectiveness. Additionally, Decision Tree models, which serve as a base for Random Forest, showed varied results. The single Decision Tree achieved a validation F1 score of 0.4252, which improved modestly with Bagging to 0.4363 and more significantly with Adaboosting to 0.4588. These results illustrate how ensemble techniques help mitigate the inherent overfitting tendencies of decision trees.
+
+On the other hand, some models struggled to achieve competitive performance. For example, the XGBClassifier's validation F1 score of 0.2949 was surprisingly low, given its reputation as a high-performing algorithm. This outcome may indicate that the model requires further hyperparameter tuning or better feature engineering to suit this dataset. Similarly, K-Nearest Neighbors (KNN) scored only 0.2543, likely due to its inability to handle high-dimensional data effectively without feature selection or dimensionality reduction. The Multilayer Perceptron (MLP) model also underperformed, achieving a validation F1 score of 0.2773, suggesting that it may lack the architectural sophistication or training optimizations present in the custom Neural Network.
+
+The Support Vector Machine (SVM), with a validation F1 score of 0.4357, performed comparably to ensemble models like Decision Tree Bagging. This performance reflects the SVM's ability to model nonlinear relationships in the data, though it fell short of the highest-performing methods.
+
+Overall, the results highlight the advantages of more advanced models like Neural Networks while also showcasing the reliability of simpler models such as Logistic Regression and Random Forest. The modest gains achieved by boosting methods indicate that ensemble techniques are valuable but may require careful tuning to unlock their full potential. Future work could explore additional optimizations, such as hyperparameter tuning for XGBClassifier, further experimentation with Neural Network architectures, and the use of ensemble methods that combine predictions from the strongest individual models. 
+
+\begin{table}[ht!]
+   \centering
+   \begin{tabular}{|c|c|}
+       \hline
+       \textbf{Submission \#} & \textbf{Public Score} \\ \hline
+       1 & 0.449 \\ \hline
+       2 & 0.461 \\ \hline
+       3 & 0.448 \\ \hline
+       4 & 0.226 \\ \hline
+       5 & 0.288 \\ \hline
+       6 & 0.464 \\ \hline
+       7 & 0.462 \\ \hline
+       8 & 0.458 \\ \hline
+       9 & 0.458 \\ \hline
+       10 & 0.455 \\ \hline
+       11 & 0.436 \\ \hline
+   \end{tabular}
+   \caption{Public Scores of Kaggle Submissions}
+   \label{tab:kaggle-scores}
+\end{table}
+
+
+In Table 2, we observe a trend in the public scores of our submissions. From Submission 11 to Submission 6, there is a steady increase in scores, reflecting gradual improvements in our models. Submission 6 achieved the highest score of 0.464, closely followed by Submission 7 with 0.462. Submissions 4 and 5, however, represent experiments involving significant changes to the code, such as altering the distribution and composition of the training and validation sets. Specifically, we attempted to train the models using balanced datasets, ensuring equal representation of the classes. However, this approach did not yield positive results, as the test set's composition was fundamentally different. This highlights the challenge of aligning training strategies with the real-world characteristics of the test data.
+
+\begin{table}[ht!]
+   \centering
+   \begin{tabular}{|l|c|}
+       \hline
+       \textbf{Hyperparameter} & \textbf{Value} \\ \hline
+       Class Weight & \{0: 1, 1: 3\} \\ \hline
+       Random State & 0 \\ \hline
+       Max Depth & 20 \\ \hline
+       Max Leaf Nodes & 200 \\ \hline
+       Number of Estimators & 1000 \\ \hline
+   \end{tabular}
+   \caption{Hyperparameters for the Random Forest Classifier}
+   \label{tab:random-forest-hyperparameters}
+\end{table}
+
+
+
+\begin{table}[ht!]
+   \centering
+   \begin{tabular}{|l|c|}
+       \hline
+       \textbf{Component} & \textbf{Details} \\ \hline
+       \textbf{Input Size} & \( \text{X\_train\_tensor.shape[1]} \) \\ \hline
+       \textbf{Hidden Layers} & 
+       \begin{tabular}[c]{@{}l@{}}
+           Layer 1: 512 units \\
+           Layer 2: 512 units \\
+           Layer 3: 256 units \\
+           Layer 4: 256 units \\
+           Layer 5: 128 units \\
+           Layer 6: 128 units \\
+           Layer 7: 64 units \\
+           Layer 8: 64 units \\
+           Layer 9: 32 units \\
+           Layer 10: 16 units
+       \end{tabular} \\ \hline
+       \textbf{Output Layer} & 1 unit (Binary classification) \\ \hline
+       \textbf{Activation Function} & Leaky ReLU \\ \hline
+       \textbf{Dropout Rate} & 0.1 \\ \hline
+       \textbf{Weight Initialization} & Xavier Uniform \\ \hline
+       \textbf{Loss Function} & BCEWithLogitsLoss \\ \hline
+       \textbf{Optimizer} & NAdam \\ \hline
+       \textbf{Learning Rate} & 0.005 \\ \hline
+       \textbf{Number of Epochs} & 100 \\ \hline
+   \end{tabular}
+   \caption{Architecture and Hyperparameters of the Custom Neural Network}
+   \label{tab:custom-nn-architecture}
+\end{table}
+
+The architecture and hyperparameters of the custom neural network in Table 4 were designed to address a binary classification problem. The model has 10 hidden layers, starting with 512 units in the initial layers and gradually reducing to 16 units in the final hidden layer. This progression allows the network to learn complex patterns while focusing on essential features as it moves deeper. The Leaky ReLU activation function was used to avoid vanishing gradients and handle negative values, ensuring smoother optimization.
+
+A dropout rate of 0.1 was applied after each layer to reduce overfitting by randomly deactivating neurons during training. The Xavier uniform initialization was chosen to distribute weights optimally at the start, helping stabilize gradient flows through the network. The output layer consists of a single unit for binary classification, with BCEWithLogitsLoss as the loss function. This was combined with a positive class weighting factor to handle imbalances in the dataset.
+
+The NAdam optimizer was used for training, combining the benefits of Adam optimization and Nesterov momentum. A learning rate of 0.005 was set to balance the speed of convergence and training stability. The model was trained over 100 epochs, providing enough time to learn the data's patterns without overfitting.
+
 
 \begin{figure}[ht!]
    \centering
-   \includegraphics[width=0.8\textwidth]{example-image} % Adjust width as needed
+   \includegraphics[width=0.8\textwidth]{results/nn_loss_overtime.png}
    \caption{This is a sample caption for the image.}
    \label{fig:sample-image}
 \end{figure}
 
+Figure 1 shows the training and validation loss, as well as the F1 score over 100 epochs. There is a gradual decrease in the training loss until around 30 epochs. The validation loss, on the other hand, remains stable throughout most of the training, with a plateau in the error between epochs 10 and 20. The F1 score consistently stays between 0.40 and 0.47. Therefore, it may be possible to reduce the number of epochs since all metrics converge starting from around 70 epochs.
+
+
 \section{Discussion}
 
-\section{Citations, figures, tables, references}
+\section{Statement of Contributions}
 \label{others}
 
-These instructions apply to everyone, regardless of the formatter being used.
+I, Sidney Gharib, developed a significant portion of the code for the solution.
+I worked on the Random Forest model, the Decision Tree model, the Decision Tree Adaboosting model, a few neural networks and a few other models.
+I performed the data analysis with the help of my teammates. Additionally, I contributed to writing the report for the section analyzing the results.
+We hereby state that all the work presented in this report is that of the authors.
 
-\subsection{Citations within the text}
+% Citations within the text should be based on the \texttt{natbib} package
+% and include the authors' last names and year (with the ``et~al.'' construct
+% for more than two authors). When the authors or the publication are
+% included in the sentence, the citation should not be in parenthesis using \verb|\citet{}| (as
+% in ``See \citet{Hinton06} for more information.''). Otherwise, the citation
+% should be in parenthesis using \verb|\citep{}| (as in ``Deep learning shows promise to make progress
+% towards AI~\citep{Bengio+chapter2007}.'').
 
-Citations within the text should be based on the \texttt{natbib} package
-and include the authors' last names and year (with the ``et~al.'' construct
-for more than two authors). When the authors or the publication are
-included in the sentence, the citation should not be in parenthesis using \verb|\citet{}| (as
-in ``See \citet{Hinton06} for more information.''). Otherwise, the citation
-should be in parenthesis using \verb|\citep{}| (as in ``Deep learning shows promise to make progress
-towards AI~\citep{Bengio+chapter2007}.'').
-
-The corresponding references are to be listed in alphabetical order of
-authors, in the \textsc{References} section. As to the format of the
-references themselves, any style is acceptable as long as it is used
-consistently.
+% The corresponding references are to be listed in alphabetical order of
+% authors, in the \textsc{References} section. As to the format of the
+% references themselves, any style is acceptable as long as it is used
+% consistently.
 
 \subsection{Footnotes}
 
