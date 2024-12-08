@@ -7,9 +7,6 @@ def get_training_data():
 def get_testing_data():
     return pd.read_csv('../data/test.csv')
 
-def data_exploration(X, y):
-    NotImplementedError("This method is not implemented yet")
-
 def feature_encoding(X):
     """
     One-hot encode the 'features'.
@@ -21,29 +18,8 @@ def feature_encoding(X):
     for column in non_numerical_columns_names:
         # Only encore the columns that are not numerical 
         X[column] = le.fit_transform(X[column])
-    # print(X.head())
 
     return X
-
-# def encode_label(y):
-#     """
-#     Encode the 'labels' data to numerical values.
-#     Input: y: labels (pd.DataFrame)
-#     Output: y: labels_int (pd.DataFrame)
-#     """
-#     le = LabelEncoder()
-#     y['y'] = le.fit_transform(y['y'])
-#     return y
-
-    
-def data_preprocessing():
-    # First download data
-    X, y = get_data()
-    # convert categorical to numerical
-    X = feature_encoding(X)
-    # y = encode_label(y)
-
-    return X, y
 
 def normalize_features(X_train, X_validation, X_test, Is_Standard_scaler = True):
     """

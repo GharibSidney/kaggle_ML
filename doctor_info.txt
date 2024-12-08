@@ -3,3 +3,23 @@ Si gros, si HighBp, HeartDiseaseorAttack, BMI_Category (BMI), smoke,
 pas sur HvyAlcoholConsump a cause sucre 
 
 non pas santé : MentHlth
+
+Exception has occurred: ValueError
+The action must be a LightAction.
+  File "C:\Users\sidne\OneDrive\Bureau\Automne2024\algo_ai\divercity_AI_game\game_state_divercite.py", line 162, in apply_action
+    raise ValueError("The action must be a LightAction.")
+  File "C:\Users\sidne\OneDrive\Bureau\Automne2024\algo_ai\divercity_AI_game\my_player_heuristics.py", line 518, in divercity_priority
+    next_state = current_state.apply_action(action)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sidne\OneDrive\Bureau\Automne2024\algo_ai\divercity_AI_game\my_player_heuristics.py", line 54, in compute_action
+    action = self.divercity_priority(current_state)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sidne\OneDrive\Bureau\Automne2024\algo_ai\divercity_AI_game\main_divercite.py", line 50, in play
+    master.record_game(listeners=listeners)
+  File "C:\Users\sidne\OneDrive\Bureau\Automne2024\algo_ai\divercity_AI_game\main_divercite.py", line 107, in <module>
+    play(player1=player1, player2=player2, log_level=log_level, port=port, address=address, gui=gui, record=record, gui_path=gui_path)
+ValueError: The action must be a LightAction.
+
+
+647 count
+177 seed
