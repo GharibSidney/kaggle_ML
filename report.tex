@@ -54,31 +54,30 @@ The research leverages machine learning methodologies to uncover significant pat
 \section{Feature design}
 
 The first step was to explore the dataset to understand the kind of data and features we were working with. By doing so, we were 
-able to notice that the dataset had more than 200,000 samples and 28 features. While most of the features were numbers 
+able to notice that the dataset had more than 200,000 samples and 28 features. While most of the features were numerical 
 (binary, discrete and continuous numbers), a few of them were of type "object". 
 
 For each of the discrete and continuous number features, we made a boxplot of their values in the dataset and displayed it. 
 This helped us visualize the distribution of the numerical features and their outliers values. The features BMI, MentHlth and PhysHlth
-are the features for which there is the most outliers. This is an information the we had to keep in mind while developping our model.
+are the features for which there is the most outliers. This is an information the we had to keep in mind while developing our models.
 
-For each of the binary features, we made a plot showing the distribution of "yes" and "no" labels per possible values which are 0 and 1. 
-When the percentage of "yes" is very similar between 0 and 1, it could mean that the feature in question doesn't have a significant 
-impact on the label. Therefore, we consider removing that feature for the model training. 
+For each of the binary features, we made a plot that showed the distribution of "yes" and "no" labels per possible values which are 0 and 1 since they are binary features. 
+When the percentage of "yes" is very similar for 0 and 1, it could mean that the feature in question doesn't have a significant 
+impact on the label. Therefore, we considered removing that feature from the model training. 
 
-Since we also wished to explore the features that are non-numerical, we used an ordinal encoding for the features BMI Category, 
+Since we also wished to explore the features that were non-numerical, we used an ordinal encoding for the features BMI Category, 
 Age Group, Education Level and Income Group. We used scikit-learn OrdinalEncoder. Because these features can only take a small amount of different values, we were able to 
-specified the order of importance between the different values. For instance, the only possible values for Income Group are "Low Income", 
+specify the order of importance between the different values. For instance, the only possible values for Income Group are "Low Income", 
 "Middle Income" and "High Income". It is simple to determine that Low Income is inferior to Middle Income which is inferior to High 
-Income. It is important to specify the order, otherwise the ordinal encoder from sklearn.preprocessing will encode the values in 
-alphabetical order.
+Income. It is important to specify the order, otherwise the ordinal encoder will encode the values in alphabetical order.
 
-Once all the features were encoded numerically, we were able to plot a graph representing the correlation between Diabetes binary 
+Once all the features were encoded, we were able to plot a graph representing the correlation between Diabetes binary 
 values from labels.csv and each of the features. We used pandas.DataFrame.corrwith function in order to make such graph. 
 The resulting graph shows how much each 28 features tend to affect the diabetes diagnosis. When the result for a feature is positive, 
 it means that samples that have a higher value for this feature tends to be labelled as "yes" and vice versa. If the result for a 
-feature is very close to zero, we consider removing that feature from the training step. 
+feature was very close to zero, we considered removing that feature from the training step. 
 
-We used another metric, called the mutual information, to measure how much each feature impacts the diagnosis. We computed the mutual 
+We used another metric, called the mutual information score, to measure how much each feature impacts the diagnosis. We computed the mutual 
 information score separately for the binary features, the continuous numerical features and the discrete numerical features. 
 The lower is the score, the lower should be the impact that this feature has on the diagnosis. This metric was also considered when 
 trying to make a good feature selection.
@@ -93,67 +92,44 @@ keep both of them to train the model.
 After taking into consideration all of the metrics, we were able to filter out some features from the training step. We decided to 
 remove Age Group, MentHlth, HvyAlcoholConsump, NoDocbcCost, Smoker, Fruits, Veggies, Mental Health Risk and AnyHealthcare. 
 We tried another combinations of features to remove, but we noticed that this feature selection was the one that gave the best results.
+Other features were removed for models where we used PCA. 
 
 In order to complete the data preprocessing, we encoded all the non-numerical features using scikit-learn LabelEncoder, we split the 
 dataset into a training set and a validation set and we normalized the training set, the validation set and the testing set using 
 scikit-learn StandartScaler. 
 
-\subsection{Style}
-
-Papers to be submitted to ICLR 2025 must be prepared according to the
-instructions presented here.
-
-%% Please note that we have introduced automatic line number generation
-%% into the style file for \LaTeXe. This is to help reviewers
-%% refer to specific lines of the paper when they make their comments. Please do
-%% NOT refer to these line numbers in your paper as they will be removed from the
-%% style file for the final version of accepted papers.
-
-Authors are required to use the ICLR \LaTeX{} style files obtainable at the
-ICLR website. Please make sure you use the current files and
-not previous versions. Tweaking the style files may be grounds for rejection.
-
-\subsection{Retrieval of style files}
-
-The style files for ICLR and other conference information are available online at:
-\begin{center}
-   \url{http://www.iclr.cc/}
-\end{center}
-The file \verb+iclr2025_conference.pdf+ contains these
-instructions and illustrates the
-various formatting requirements your ICLR paper must satisfy.
-Submissions must be made using \LaTeX{} and the style files
-\verb+iclr2025_conference.sty+ and \verb+iclr2025_conference.bst+ (to be used with \LaTeX{}2e). The file
-\verb+iclr2025_conference.tex+ may be used as a ``shell'' for writing your paper. All you
-have to do is replace the author, title, abstract, and text of the paper with
-your own.
-
-The formatting instructions contained in these style files are summarized in
-sections \ref{gen_inst}, \ref{headings}, and \ref{others} below.
 
 \section{Algorithms}
-\label{gen_inst}
 
-The text must be confined within a rectangle 5.5~inches (33~picas) wide and
-9~inches (54~picas) long. The left margin is 1.5~inch (9~picas).
-Use 10~point type with a vertical spacing of 11~points. Times New Roman is the
-preferred typeface throughout. Paragraphs are separated by 1/2~line space,
-with no indentation.
+Since we wanted to increase our chances of obtaining a higher score in the Kaggle competition, we trained many different models. We will 
+briefly explain the algorithm behind our 5 best models.
 
-Paper title is 17~point, in small caps and left-aligned.
-All pages should start at 1~inch (6~picas) from the top of the page.
+Firstly, we used a Random Forest model which is an ensemble learning method that uses multiple decision trees to produce an output. 
+It allows to make a better generalization than a single decision tree alone. In order to train all the different decision trees, 
+the Random Forest creates a subset of the training set for each decision tree. When we want to make a prediction, each decision tree will 
+give its own prediction value and the Random Forest will use the most common prediction value among the decision trees as its prediction value.
 
-Authors' names are
-set in boldface, and each name is placed above its corresponding
-address. The lead author's name is to be listed first, and
-the co-authors' names are set to follow. Authors sharing the
-same address can be on the same line.
+Secondly, we used a Decision Tree model with Adaboosting. First of all, a Decision Tree is a model that tries to leaning decision rules from the 
+features of the training set. It starts from a root node from where the training set will be split into branches accordingly to the decision rules 
+represented by the internal nodes. The leaves of the decision tree represent the class label the tree is going to predict if a sample followed all 
+the branches down to that leaf node. Then, we used Adaboosting, an ensemble learning method, on top of our decision tree model. This algorithm trains 
+multiple weak learners sequentially, decision stumps in the case of a Decision Tree model, while focussing on the samples that were misclassified. 
+Samples that were misclassified will have a more important weight when training the next weak learner. The prediction of this model is given by a 
+weighted combination of all learners prediction.
 
-Please pay special attention to the instructions in section \ref{others}
-regarding figures, tables, acknowledgments, and references.
+Thirdly, we used a Logistic Regression model which is a probabilistic discriminative model. With the discriminative approach, we want to learn the 
+model's parameters directly from the maximum likelihood. The Logistic Regression classifier models the probability of a class by mapping the linear 
+combination of the input features with a sigmoid function. For a 2-class classifier, the predicted value is between 0 and 1. If it's greater or equal 
+to 0.5, it means the model predicted the positive class for the given sample. Otherwise, the model predicted the negative class. 
 
+Fourthly, we used a Logistic Regression model with Adaboosting. The idea is very similar to Adaboosting with a Decision Tree model, but instead of 
+using decision stumps as weak learners, we use a simpler version of a logistic regression.
 
-There will be a strict upper limit of 10 pages for the main text of the initial submission, with unlimited additional pages for citations. 
+Fifthly, we used a Neural Network. This model is formed by multiple layers such as an input layer followed by hidden layers that each has its activation 
+layer. The last layer is an output layer. Layers have multiple neurons and every neurons make a computation on an input and pass the result to the next 
+layer. This is called the forward pass. After, the Neural Network executes a backward pass during which it updates the weights for each neurons. The 
+goal is to minimize the error score using gradient descent. 
+
 
 \section{Methodology}
 \label{headings}
@@ -310,6 +286,11 @@ Figure 1 shows the training and validation loss, as well as the F1 score over 10
 I, Sidney Gharib, developed a significant portion of the code for the solution.
 I worked on the Random Forest model, the Decision Tree model, the Decision Tree Adaboosting model, a few neural networks and a few other models.
 I performed the data analysis with the help of my teammates. Additionally, I contributed to writing the report for the section analyzing the results.
+
+I, Elizabeth Michaud, mainly developed code in the data exploration and preprocessing part. I tried to improve a few of the models that were already 
+in place in the code. I tried the stacking model method, but the results were inconclusive. I wrote the feature design and the algorithm sections of 
+the report. 
+
 We hereby state that all the work presented in this report is that of the authors.
 
 % Citations within the text should be based on the \texttt{natbib} package
